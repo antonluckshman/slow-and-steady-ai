@@ -1,0 +1,115 @@
+Verified CLI demonstration using explicit NON-AI demo rules.
+Paths and identifiers are normalized. Real model inference was not performed.
+
+$ python -m sloth_tidy demo <demo-inbox>
+Created disposable demo inbox: "<demo-inbox>"
+
+$ python -m sloth_tidy plan <demo-inbox> --demo-rules --config sloth.toml
+Inbox: "<demo-inbox>"
+Planner: demo-rules / "NON-AI demo rules"
+Plan: <token> | 5 proposed moves
+  "book-python-guide.txt" -> "_tidied/reading/book-python-guide.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "invoice-electricity.txt" -> "_tidied/finance/invoice-electricity.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "meeting-notes-garden-project.txt" -> "_tidied/work/meeting-notes-garden-project.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "photo-caption-holiday.txt" -> "_tidied/personal/photo-caption-holiday.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "travel-packing-list.txt" -> "_tidied/personal/travel-packing-list.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+Skipped/kept: 2
+  KEEP "still-downloading.part": "temporary or incomplete download"
+  KEEP "mystery.txt": "kept: Demo keyword rule; no AI inference"
+Dry run complete. No files moved. Saved plan: "<demo-inbox>\\.sloth-tidy\\plan-<plan-id>.json"
+Review with: python -m sloth_tidy show "<demo-inbox>\\.sloth-tidy\\plan-<plan-id>.json"
+Apply with:  python -m sloth_tidy apply "<demo-inbox>\\.sloth-tidy\\plan-<plan-id>.json"
+
+$ python -m sloth_tidy show <demo-inbox>\.sloth-tidy\plan-<plan-id>.json
+Inbox: "<demo-inbox>"
+Planner: demo-rules / "NON-AI demo rules"
+Plan: <token> | 5 proposed moves
+  "book-python-guide.txt" -> "_tidied/reading/book-python-guide.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "invoice-electricity.txt" -> "_tidied/finance/invoice-electricity.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "meeting-notes-garden-project.txt" -> "_tidied/work/meeting-notes-garden-project.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "photo-caption-holiday.txt" -> "_tidied/personal/photo-caption-holiday.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "travel-packing-list.txt" -> "_tidied/personal/travel-packing-list.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+Skipped/kept: 2
+  KEEP "still-downloading.part": "temporary or incomplete download"
+  KEEP "mystery.txt": "kept: Demo keyword rule; no AI inference"
+
+$ python -m sloth_tidy apply <demo-inbox>\.sloth-tidy\plan-<plan-id>.json
+Inbox: "<demo-inbox>"
+Planner: demo-rules / "NON-AI demo rules"
+Plan: <token> | 5 proposed moves
+  "book-python-guide.txt" -> "_tidied/reading/book-python-guide.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "invoice-electricity.txt" -> "_tidied/finance/invoice-electricity.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "meeting-notes-garden-project.txt" -> "_tidied/work/meeting-notes-garden-project.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "photo-caption-holiday.txt" -> "_tidied/personal/photo-caption-holiday.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "travel-packing-list.txt" -> "_tidied/personal/travel-packing-list.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+Skipped/kept: 2
+  KEEP "still-downloading.part": "temporary or incomplete download"
+  KEEP "mystery.txt": "kept: Demo keyword rule; no AI inference"
+Error: "Approval required. Review the preview, then pass --approve \"MOVE <token>\"."
+
+$ python -m sloth_tidy apply <demo-inbox>\.sloth-tidy\plan-<plan-id>.json --approve MOVE <token>
+Inbox: "<demo-inbox>"
+Planner: demo-rules / "NON-AI demo rules"
+Plan: <token> | 5 proposed moves
+  "book-python-guide.txt" -> "_tidied/reading/book-python-guide.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "invoice-electricity.txt" -> "_tidied/finance/invoice-electricity.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "meeting-notes-garden-project.txt" -> "_tidied/work/meeting-notes-garden-project.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "photo-caption-holiday.txt" -> "_tidied/personal/photo-caption-holiday.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "travel-packing-list.txt" -> "_tidied/personal/travel-packing-list.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+Skipped/kept: 2
+  KEEP "still-downloading.part": "temporary or incomplete download"
+  KEEP "mystery.txt": "kept: Demo keyword rule; no AI inference"
+Moved 5 files. Journal: "<demo-inbox>\\.sloth-tidy\\journal-<plan-id>.jsonl"
+To restore: python -m sloth_tidy undo "<demo-inbox>\\.sloth-tidy\\journal-<plan-id>.jsonl"
+
+$ python -m sloth_tidy undo <demo-inbox>\.sloth-tidy\journal-<plan-id>.jsonl --approve UNDO <token>
+Restore to inbox: "<demo-inbox>"
+  RESTORE "_tidied/personal/travel-packing-list.txt" -> "travel-packing-list.txt"
+  RESTORE "_tidied/personal/photo-caption-holiday.txt" -> "photo-caption-holiday.txt"
+  RESTORE "_tidied/work/meeting-notes-garden-project.txt" -> "meeting-notes-garden-project.txt"
+  RESTORE "_tidied/finance/invoice-electricity.txt" -> "invoice-electricity.txt"
+  RESTORE "_tidied/reading/book-python-guide.txt" -> "book-python-guide.txt"
+Restored/reconciled 5 files. Journal retained for audit.
+
+$ python -m sloth_tidy undo <demo-inbox>\.sloth-tidy\journal-<plan-id>.jsonl
+Restore to inbox: "<demo-inbox>"
+All journaled moves are already undone.
+
+$ python -m sloth_tidy apply <demo-inbox>\.sloth-tidy\plan-<plan-id>.json --approve MOVE <token>
+Inbox: "<demo-inbox>"
+Planner: demo-rules / "NON-AI demo rules"
+Plan: <token> | 5 proposed moves
+  "book-python-guide.txt" -> "_tidied/reading/book-python-guide.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "invoice-electricity.txt" -> "_tidied/finance/invoice-electricity.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "meeting-notes-garden-project.txt" -> "_tidied/work/meeting-notes-garden-project.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "photo-caption-holiday.txt" -> "_tidied/personal/photo-caption-holiday.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+  "travel-packing-list.txt" -> "_tidied/personal/travel-packing-list.txt" (95% self-reported confidence)
+    "Demo keyword rule; no AI inference"
+Skipped/kept: 2
+  KEEP "still-downloading.part": "temporary or incomplete download"
+  KEEP "mystery.txt": "kept: Demo keyword rule; no AI inference"
+Error: "This plan already has an execution journal. Create a fresh plan."

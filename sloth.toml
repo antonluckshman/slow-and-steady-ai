@@ -1,0 +1,17 @@
+# Optional: python -m sloth_tidy plan ./inbox --config sloth.toml
+model = "qwen2.5:1.5b"
+url = "http://127.0.0.1:11434"
+min_age_seconds = 300
+max_files = 100
+max_size_mb = 256
+batch_size = 8
+min_confidence = 0.80
+timeout_seconds = 180
+
+[categories]
+finance = "Invoices, receipts, taxes, budgets and financial paperwork"
+work = "Meeting notes, project briefs and work documents"
+personal = "Household, travel and personal documents"
+media = "Photos, music, video and creative assets"
+reading = "Books, articles, guides and learning material"
+software = "Installers, software packages and source archives"
